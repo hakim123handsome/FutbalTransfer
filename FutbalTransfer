@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Futbal Transfers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+    }
+    body.dark-mode {
+      --bg-color: #121212;
+      --text-color: #f0f0f0;
+    }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s, color 0.3s;
+    }
+    header {
+      padding: 1rem;
+      background: #0077cc;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    nav a {
+      margin: 0 1rem;
+      color: white;
+      text-decoration: none;
+    }
+    .toggle {
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      background: white;
+      color: #0077cc;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .content {
+      padding: 2rem;
+    }
+    .transfer-card {
+      border: 1px solid #ccc;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+    }
+    #searchInput {
+      padding: 0.5rem;
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    #newsFeed {
+      margin: 2rem 0;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #f0f0f0;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div><strong>Futbal Transfers</strong></div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Transfers</a>
+      <a href="#">Players</a>
+      <a href="#">Clubs</a>
+      <a href="#">News</a>
+    </nav>
+    <div class="toggle" onclick="toggleMode()">Toggle Mode</div>
+  </header>
+
+  <div class="content">
+    <h2>Latest Transfers</h2>
+    <input type="text" id="searchInput" placeholder="Search players or clubs..." onkeyup="searchTransfers()" />
+    <div id="results"></div>
+
+    <div class="transfer-card">
+      <strong>Kylian Mbappé</strong> → Real Madrid<br>
+      Transfer Fee: €150M<br>
+      Date: August 1, 2025
+    </div>
+    <div class="transfer-card">
+      <strong>Victor Osimhen</strong> → Chelsea<br>
+      Transfer Fee: €110M<br>
+      Date: July 28, 2025
+    </div>
+    <div class="transfer-card">
+      <strong>Jude Bellingham</strong> → Real Madrid<br>
+      Transfer Fee: €100M<br>
+      Date: July 20, 2025
+    </div>
+
+    <div id="newsFeed"></div>
+  </div>
+
+  <footer>
+    &copy; 2025 Futbal Transfers. All rights reserved.
+  </footer>
+
+  <script>
+    function toggleMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+
+    const transfers = [
+      { name: "Kylian Mbappé", club: "Real Madrid" },
+      { name: "Victor Osimhen", club: "Chelsea" },
+      { name: "Jude Bellingham", club: "Real Madrid" },
+      { name: "Erling Haaland", club: "Manchester City" }
+    ];
+
+    function searchTransfers() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const results = transfers.filter(t =>
+        t.name.toLowerCase().includes(input) || t.club.toLowerCase().includes(input)
+      );
+
+      document.getElementById("results").innerHTML = results.map(t =>
+        `<div class="transfer-card"><strong>${t.name}</strong> → ${t.club}</div>`
+      ).join("");
+    }
+
+    const news = [
+      "🚨 Mbappé signs for Real Madrid in record-breaking deal!",
+      "🔄 Osimhen completes move to Chelsea for €110M.",
+      "🗣️ Haaland linked with surprise move to Bayern Munich.",
+      "📈 Bellingham’s market value hits €130M after stellar season."
+    ];
+
+    let index = 0;
+    function updateNewsFeed() {
+      document.getElementById("newsFeed").innerHTML = `<p>${news[index]}</p>`;
+      index = (index + 1) % news.length;
+    }
+
+    setInterval(updateNewsFeed, 3000);
+    updateNewsFeed();
+  </script>
+</body>
+</html>
